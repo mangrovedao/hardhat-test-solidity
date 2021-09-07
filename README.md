@@ -5,16 +5,24 @@
 ⚠️ Requires [hardhat-deploy](https://github.com/wighawag/hardhat-deploy) as a peer dependency.
 
 ## tl;dr
+
 Tests suites are solidity contracts, tests are solidity functions.
+
+## Install
+> terminal
+```
+$ npm install @giry/hardhat-test-solidity
+```
+
 > hardhat.config.js
 ```javascript
-require('hardhat-test-solidity');
+require('@giry/hardhat-test-solidity');
 ```
 
 > MyContract_Test.sol:
 ```solidity
 // Adds Test library to the context
-import Test from "hardhat-test-solidity/test.sol";
+import Test from "@giry/hardhat-test-solidity/test.sol";
 
 // `_Test` suffix means it is a test contract
 contract MyContract_Test {
@@ -59,7 +67,7 @@ $ npx hardhat test-solidity MyContract
 ## How to test for event emission
 Suppose you want to make sure that contract `Market` emits the `Trade` event.
 ```
-import "hardhat-test-solidity";
+import "@giry/hardhat-test-solidity/test.sol";
 contract My_Test {
   Market amm;
 
@@ -119,7 +127,7 @@ To get nicely-formatted logs, use the `Display` library. There are
 To get pretty-printing of addresses, in your test setup do
 
 ```solidity
-import {Display as D} from "hardhat-test-solidity/test.sol";
+import {Display as D} from "@giry/hardhat-test-solidity/test.sol";
 ...
 D.register(address addr, string memory name)
 ```
@@ -154,7 +162,7 @@ See `src/logFormatters.js` for examples.
 
 This plugin uses the [debug](https://www.npmjs.com/package/debug) package. To debug this plugin only do:
 
-> `DEBUG='hardhat:test-solidity' npx hardhat test-solidity [args]`
+> `DEBUG='hardhat:test-solidity:*' npx hardhat test-solidity [args]`
 
 
 # Hardhat TypeScript plugin boilerplate
