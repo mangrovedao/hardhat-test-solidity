@@ -29,7 +29,8 @@
     "dist/src/",
     "src/",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "test.sol"
   ],
   "devDependencies": {
     "@types/chai": "^4.1.7",
