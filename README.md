@@ -27,7 +27,7 @@ import Test from "@giry/hardhat-test-solidity/test.sol";
 // `_Test` suffix means it is a test contract
 contract MyContract_Test {
 
-  // `_test` suffix means it is a test contract
+  // `_test` suffix means it is a test function
   function addition_test() public {
     prepare();
     // Logging will be interpreted by hardhat-test-solidity
@@ -56,7 +56,7 @@ $ npx hardhat test-solidity MyContract
 * You probably want a `MyContract_Test` for every `MyContract`.
 
 ## How to test for stuff
-* `Test.check(bool success,string memory message)` suceeds if `success` is true.
+* `Test.check(bool success,string memory message)` succeeds if `success` is true.
 * `Test.eq(actual,expected,message)` for testing `bytes32`, `bool`, `string`, `uint`, `address` equality.
 * `Test.eq0(actual,expected,message)` for testing `bytes` equality.
 * `Test.less(uint a, uint b,message)` succeeds if `a < b`.
@@ -131,9 +131,7 @@ import {Display as D} from "@giry/hardhat-test-solidity/test.sol";
 ...
 D.register(address addr, string memory name)
 ```
-
-and your and events will display `name` instead of `addr`. In particular the `--show-events` switch which shows all events emitted by non-test contracts, will replace registered addresses with names as well. 
-
+then when using `--show-events` and wherever addresses are used, `name` will be shown instead of `addr`. 
 
 ## How to configure the plugin
 > `hardhat.config.js`
@@ -143,11 +141,12 @@ and your and events will display `name` instead of `addr`. In particular the `--
   testSolidity: { // default values as follows:
     timeout: 300_000 /* test suite timeout in ms */,
     logFormatters: (hre,formatArg) => { return {}; } /* format logs */
+    testers: (hre,formatArg,assert) => { return {}; } /* format logs */
   }
 }
 ```
 
-### `logFormatters`
+### Custom log formatters
 `logFormatters(hre,formatArg):object` is a function that takes the `hre` hardhat runtime environment and a `formatArg(arg,type?):string` utility function. `arg` is dynamically tested and `type` is an optional type hint (it can be `uint`, `address`, or an array of type hints) to help formatting.
 
 `logFormatters` should return an object where keys are event names and values are formatting functions that should directly log to console and have type:
@@ -156,70 +155,25 @@ and your and events will display `name` instead of `addr`. In particular the `--
 (log:ethers.LogDescription,rawLog:{topics,data},originator:string):void
 ```
 
+#### Tip
 See `src/logFormatters.js` for examples.
+
+### Custom testers/assertions
+`testers(hre,formatArg,assert/*assert library*/)` takes the `hre`, `formatArg`, and the [chai](https://www.chaijs.com/) assert object, and returns an object where keys are test event names and values are of the form :
+
+```javascript
+{
+  trigger({success,message,actual,expected}) : void
+}
+```
+
+You should create the corresponding events in your tests so that they can be interpreted by your functions.
+
+#### Tip
+See `src/testers.js` for examples.
 
 ## Debugging
 
 This plugin uses the [debug](https://www.npmjs.com/package/debug) package. To debug this plugin only do:
 
 > `DEBUG='hardhat:test-solidity:*' npx hardhat test-solidity [args]`
-
-
-# Hardhat TypeScript plugin boilerplate
-
-This is a sample Hardhat plugin written in TypeScript. Creating a Hardhat plugin
-can be as easy as extracting a part of your config into a different file and
-publishing it to npm.
-
-This sample project contains an example on how to do that, but also comes with
-many more features:
-
-- A mocha test suite ready to use
-- TravisCI already setup
-- A package.json with scripts and publishing info
-- Examples on how to do different things
-
-## Installation
-
-To start working on your project, just run
-
-```bash
-npm install
-```
-
-## Plugin development
-
-Make sure to read our [Plugin Development Guide](https://hardhat.org/advanced/building-plugins.html) to learn how to build a plugin.
-
-## Testing
-
-Running `npm run test` will run every test located in the `test/` folder. They
-use [mocha](https://mochajs.org) and [chai](https://www.chaijs.com/),
-but you can customize them.
-
-We recommend creating unit tests for your own modules, and integration tests for
-the interaction of the plugin with Hardhat and its dependencies.
-
-## Linting and autoformat
-
-All of Hardhat projects use [prettier](https://prettier.io/) and
-[tslint](https://palantir.github.io/tslint/).
-
-You can check if your code style is correct by running `npm run lint`, and fix
-it with `npm run lint:fix`.
-
-## Building the project
-
-Just run `npm run build` ️👷
-
-## README file
-
-This README describes this boilerplate project, but won't be very useful to your
-plugin users.
-
-Take a look at `README-TEMPLATE.md` for an example of what a Hardhat plugin's
-README should look like.
-
-## Migrating from Buidler?
-
-Take a look at [the migration guide](MIGRATION.md)!
