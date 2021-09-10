@@ -10,13 +10,9 @@ module.exports = async (hre, schema, opts) => {
   };
 
   // fail early if one of the requested test contracts doesn't exist
-  opts.argTestContractNames.forEach(async (name) => {
-    try {
-      await hre.artifacts.readArtifact(schema.toTest(name));
-    } catch (e) {
-      reject(e);
-    }
-  });
+  for (const name of opts.argTestContractNames) {
+    await hre.artifacts.readArtifact(schema.toTest(name));
+  }
 
   // otherwise, get all necessary contracts
   const artifacts = await getArtifacts();

@@ -8,7 +8,7 @@ const generate = require('./generate')
 // If opts.showEvents is true, all events NOT from the testing contract logged during test run will be shown.
 // Note that hardhat's console runs parallel to events and will be shown regardless
 // (and the console messages are not reverted like regular logs).
-module.exports = (opts, hre) => {
+module.exports = async (opts, hre) => {
   const ethers = hre.ethers; // Local ethers.js shortcut
 
   /** Testing schema, must be kept in sync with test.sol */
@@ -48,40 +48,34 @@ module.exports = (opts, hre) => {
   // - Run any functions that end with _beforeAll
   // - Run each test function
 
-  return new Promise(async (resolve, reject) => {
 
-    try {
+  debug("Contracts given: %o", opts.argTestContractNames);
 
-      debug("Contracts given: %o", opts.argTestContractNames);
+  // Make sure contracts are freshly compiled before running tests
+  if (!opts.noCompile) {
+    await hre.run("compile");
+  }
 
-      // Make sure contracts are freshly compiled before running tests
-      if (!opts.noCompile) {
-        await hre.run("compile");
-      }
+  if (opts.showTx) {
+    console.log(
+      "! No reverts because --show-tx is true. txhash would not be usable if test suite reverted after running."
+    );
+  }
 
-      if (opts.showTx) {
-        console.log(
-          "! No reverts because --show-tx is true. txhash would not be usable if test suite reverted after running."
-        );
-      }
+  const {artifacts, testContracts} = await prepare(hre, schema, opts);
 
-      const {artifacts, testContracts} = await prepare(hre, schema, opts);
-      debug( "Will run tests of: %o", testContracts.map((c) => c.contractName));
+  debug( "Will run tests of: %o", testContracts.map((c) => c.contractName));
 
-      // create mocha tests
-      const mocha = await generate(hre, schema, artifacts,testContracts, opts)
-      // await createTests(artifacts, testContracts);
+  // create mocha tests
+  const mocha = await generate(hre, schema, artifacts,testContracts, opts)
+  // await createTests(artifacts, testContracts);
 
-      // run them
-      mocha.run((failures) => {
-        if (failures) {
-          reject("At least one test failed.");
-        } else {
-          resolve("All tests passed.");
-        }
-      });
-    } catch (e) {
-      reject(e);
+  // run them
+  mocha.run((failures) => {
+    if (failures) {
+      reject("At least one test failed.");
+    } else {
+      resolve("All tests passed.");
     }
   });
 };
