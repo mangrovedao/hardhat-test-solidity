@@ -6,7 +6,7 @@ const defaultTesters = require('./testers');
 
 module.exports = async (hre, schema, artifacts, testContracts, opts) => {
 
-  const mocha = new Mocha(hre.mocha); // Instantiate to generate tests
+  const mocha = new Mocha(hre.config.mocha); // Instantiate to generate tests
   const ethers = hre.ethers; // Local ethers.js shortcut
 
   /** 
