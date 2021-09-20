@@ -1,9 +1,9 @@
-module.exports = (hre,formatArgs,assert) => {
+module.exports = (hre,formatArg,assert) => {
   /** Fail if event signals test failure. */
   const genericFail = ({ success, actual, expected, message }) => {
     if (!success) {
       assert.fail(
-        `${message}\nActual:   ${formatArgs(actual)}\nExpected: ${formatArgs(
+        `${message}\nActual:   ${formatArg(actual)}\nExpected: ${formatArg(
           expected
         )}`
       );
