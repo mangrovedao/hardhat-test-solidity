@@ -3,7 +3,7 @@ module.exports = (hre,formatArgs,assert) => {
   const genericFail = ({ success, actual, expected, message }) => {
     if (!success) {
       assert.fail(
-        `${message}\nActual:   ${formatArg(actual)}\nExpected: ${formatArg(
+        `${message}\nActual:   ${formatArgs(actual)}\nExpected: ${formatArgs(
           expected
         )}`
       );
