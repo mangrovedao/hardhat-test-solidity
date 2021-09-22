@@ -54,6 +54,7 @@ $ npx hardhat test-solidity MyContract
 * State is reverted between tests
 * Functions are sorted alphabetically before they are added to test suite
 * You probably want a `MyContract_Test` for every `MyContract`.
+* Having multiple `_beforeAll` functions rather than setting things up in the constructor means you can split setup into multiple transactions to go around gas limits.
 
 ## How to test for stuff
 * `Test.check(bool success,string memory message)` succeeds if `success` is true.
