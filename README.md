@@ -35,7 +35,7 @@ contract MyContract_Test {
   }
 
   // Will not be interpreted as a test function
-  function prepare() {}
+  function prepare() public {}
 }
 ```
 
