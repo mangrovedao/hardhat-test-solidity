@@ -94,15 +94,27 @@ module.exports = async (hre, schema, artifacts, testContracts, opts) => {
         ...normalizedArray.map(([name]) => `${name}`.length)
       );
 
+      let mapper = ([name, { value, type }]) => {
+        let ret = [`  ${name.padEnd(padLength, " ")}: ${value} (${type})`];
+        if (type.match(/bytes[0-9]+/)) {
+          let str;
+          try {
+            str = ethers.utils.parseBytes32String(value);
+          } catch(e) {
+            str = "<not parseable>";
+          }
+          ret.push(`  ${"".padEnd(padLength, " ")}: "${str}"`);
+        }
+        return ret.join('\n');
+      };
+
+      let mapped = normalizedArray.map(mapper).join("\n");
+
+
       return (
         `Event ${log.signature}\n` +
         ` issued during ${testContractName} (address ${address})\n` +
-        normalizedArray
-          .map(
-            ([name, { value, type }]) =>
-              `  ${name.padEnd(padLength, " ")}: ${value} (${type})`
-          )
-          .join("\n") +
+        mapped +
         "\n"
       );
     }
