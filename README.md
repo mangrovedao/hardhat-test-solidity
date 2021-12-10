@@ -79,7 +79,7 @@ contract My_Test {
   function first_test() {
     Market.trade();
 
-    Test.expect_from(amm);
+    Test.expectFrom(amm);
     emit Market.Trade();
   }
 }
