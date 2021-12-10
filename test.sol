@@ -8,6 +8,7 @@ library Test {
    * Expect events from contracts
    */
   event ExpectFrom(address from);
+  event StopExpecting();
 
   // Usage: from a test contract `t`, call `expectFrom(a)`. 
   // Any subsequent non-special event emitted by `t` will mean 
@@ -15,6 +16,13 @@ library Test {
   // The order of expectations must be respected.
   function expectFrom(address from) internal {
     emit ExpectFrom(from);
+  }
+
+  // After using `expectFrom` and emitting some events you expect
+  // to see emitted elsewhere, you can use `stopExpecting` to emit 
+  // further, normal events from your test.
+  function stopExpecting() internal {
+    emit StopExpecting();
   }
 
 

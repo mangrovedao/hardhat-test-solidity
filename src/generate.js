@@ -163,6 +163,8 @@ module.exports = async (hre, schema, artifacts, testContracts, opts) => {
         testers[log.name].trigger(log.args);
       } else if (fromTest && log && log.name === "ExpectFrom") {
         expectedAddress = log.args.from;
+      } else if (fromTest && log && log.name === "StopExpecting") {
+        expectedAddress = undefined;
       } else if (fromTest && log && log.name === "Register") {
         setRegister(log.args.addr, log.args.name);
       } else if (fromTest && expectedAddress) {

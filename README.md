@@ -91,6 +91,7 @@ So: you _emit_ an event (with any arguments you like), and the plugin will check
 ### Tips
 * For a given address, the order of events matters. Between addresses it does not.
 * Events are checked _after their emission_. So do all your test, and at the end test for events. 
+* If you want to normally emit events from a test after you already called `Test.expectFrom(address)`, call `Test.stopExpecting()`;
 
 
 ## How to use the command line
