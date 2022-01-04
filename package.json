@@ -1,10 +1,10 @@
 {
   "name": "@mangrovedao/hardhat-test-solidity",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Hardhat plugin for writing tests in solidity",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/giry-dev/hardhat-test-solidity.git"
+    "url": "git+https://github.com/mangrovedao/hardhat-test-solidity.git"
   },
   "author": "Giry",
   "license": "MIT",
