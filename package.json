@@ -1,6 +1,6 @@
 {
-  "name": "@giry/hardhat-test-solidity",
-  "version": "0.0.12",
+  "name": "@mangrovedao/hardhat-test-solidity",
+  "version": "0.0.13",
   "description": "Hardhat plugin for writing tests in solidity",
   "repository": {
     "type": "git",

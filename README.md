@@ -11,18 +11,18 @@ Tests suites are solidity contracts, tests are solidity functions.
 ## Install
 > terminal
 ```
-$ npm install @giry/hardhat-test-solidity
+$ npm install @mangrovedao/hardhat-test-solidity
 ```
 
 > hardhat.config.js
 ```javascript
-require('@giry/hardhat-test-solidity');
+require('@mangrovedao/hardhat-test-solidity');
 ```
 
 > MyContract_Test.sol:
 ```solidity
 // Adds Test library to the context
-import Test from "@giry/hardhat-test-solidity/test.sol";
+import Test from "@mangrovedao/hardhat-test-solidity/test.sol";
 
 // `_Test` suffix means it is a test contract
 contract MyContract_Test {
@@ -68,7 +68,7 @@ $ npx hardhat test-solidity MyContract
 ## How to test for event emission
 Suppose you want to make sure that contract `Market` emits the `Trade` event.
 ```
-import "@giry/hardhat-test-solidity/test.sol";
+import "@mangrovedao/hardhat-test-solidity/test.sol";
 contract My_Test {
   Market amm;
 
@@ -129,7 +129,7 @@ To get nicely-formatted logs, use the `Display` library. There are
 To get pretty-printing of addresses, in your test setup do
 
 ```solidity
-import {Display as D} from "@giry/hardhat-test-solidity/test.sol";
+import {Display as D} from "@mangrovedao/hardhat-test-solidity/test.sol";
 ...
 D.register(address addr, string memory name)
 ```
