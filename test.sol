@@ -160,6 +160,17 @@ library Test {
     return success;
   }
 
+  event TestLessEq(bool success, uint actual, uint expected, string message);
+  function lessEq(
+    uint actual,
+    uint expected,
+    string memory message
+  ) internal returns (bool) {
+    bool success = actual <= expected;
+    emit TestLessEq(success, actual, expected, message);
+    return success;
+  }
+
   event TestMore(bool success, uint actual, uint expected, string message);
   function more(
     uint actual,
@@ -168,6 +179,17 @@ library Test {
   ) internal returns (bool) {
     bool success = actual > expected;
     emit TestMore(success, actual, expected, message);
+    return success;
+  }
+
+  event TestMoreEq(bool success, uint actual, uint expected, string message);
+  function moreEq(
+    uint actual,
+    uint expected,
+    string memory message
+  ) internal returns (bool) {
+    bool success = actual >= expected;
+    emit TestMoreEq(success, actual, expected, message);
     return success;
   }
 }

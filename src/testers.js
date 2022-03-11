@@ -23,10 +23,24 @@ module.exports = (hre,formatArg,assert) => {
         }
       }
     },
+    TestLessEq: {
+      trigger: ({ success, message, actual, expected }) => {
+        if (!success) {
+          assert.fail(`${actual} should be <= ${expected} (${message})`);
+        }
+      }
+    },
     TestMore: {
       trigger: ({ success, message, actual, expected }) => {
         if (!success) {
           assert.fail(`${actual} should be > ${expected} (${message})`);
+        }
+      }
+    },
+    TestMoreEq: {
+      trigger: ({ success, message, actual, expected }) => {
+        if (!success) {
+          assert.fail(`${actual} should be >= ${expected} (${message})`);
         }
       }
     },
