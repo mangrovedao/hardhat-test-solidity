@@ -160,13 +160,14 @@ library Test {
     return success;
   }
 
+  event TestMore(bool success, uint actual, uint expected, string message);
   function more(
     uint actual,
     uint expected,
     string memory message
   ) internal returns (bool) {
     bool success = actual > expected;
-    emit TestLess(success, actual, expected, message);
+    emit TestMore(success, actual, expected, message);
     return success;
   }
 }
