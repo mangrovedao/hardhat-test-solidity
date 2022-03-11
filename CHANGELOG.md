@@ -1,5 +1,5 @@
 # Changelog
-## 0.0.13 (2022-03-11)
+## 0.0.16 (2022-03-11)
 * Add `lessEq` and `moreEq` tests (closes #3).
 
 ## 0.0.12 (2021-12-10)
