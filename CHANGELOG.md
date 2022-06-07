@@ -1,4 +1,7 @@
 # Changelog
+## 0.0.17 (2022-06-07)
+* doc: tell user `receive` function is required
+ 
 ## 0.0.16 (2022-03-11)
 * Add `lessEq` and `moreEq` tests (closes #3).
 
