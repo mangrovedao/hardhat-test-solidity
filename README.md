@@ -27,6 +27,8 @@ import Test from "@mangrovedao/hardhat-test-solidity/test.sol";
 // `_Test` suffix means it is a test contract
 contract MyContract_Test {
 
+  receive() external payable {} // necessary to receive eth from test runner
+
   // `_test` suffix means it is a test function
   function addition_test() public {
     prepare();
@@ -51,6 +53,7 @@ $ npx hardhat test-solidity MyContract
 * If you have the functions `fn_test` and `fn_before`, `fn_before` will run, then `fn_test`, without state revert.
 
 ### Tips
+* You must make a `receive` function so your test contracts get ethers.
 * State is reverted between tests
 * Functions are sorted alphabetically before they are added to test suite
 * You probably want a `MyContract_Test` for every `MyContract`.
@@ -70,6 +73,8 @@ Suppose you want to make sure that contract `Market` emits the `Trade` event.
 ```
 import "@mangrovedao/hardhat-test-solidity/test.sol";
 contract My_Test {
+  receive() external payable {} // necessary to receive eth from test runner
+
   Market amm;
 
   function _beforeAll() {
