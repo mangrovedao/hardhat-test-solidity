@@ -1,3 +1,6 @@
+# Deprecation notice
+This tool is deprecated -- we have moved to [foundry](https://book.getfoundry.sh/index.html).
+
 # hardhat-test-solidity
 
 💡 Inspired by [dapptools](https://github.com/dapphub/dapptools)'s [ds-test](https://github.com/dapphub/ds-test).
